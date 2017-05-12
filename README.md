@@ -21,7 +21,7 @@ ionic run android (or ios)
 From the root of your, execute the following:
 ```
 cordova plugin add https://github.com/mapsplugin/cordova-plugin-googlemaps#1.3.9 --variable API_KEY_FOR_ANDROID="YOUR_ANDROID_API_KEY_IS_HERE" --variable API_KEY_FOR_IOS="YOUR_IOS_API_KEY_IS_HERE"
-npm install --save @ionic-native/google-maps
+npm install ionic-native@2.2.11 --save
 ```
 To get your variable API_KEY_ for ANDROID and IOS [Developer Console](https://console.developers.google.com) ,create one Project,
  then go to[ Project's credentials](https://console.developers.google.com), ENABLE API
@@ -31,14 +31,13 @@ To get your variable API_KEY_ for ANDROID and IOS [Developer Console](https://co
 ### home component
 ```
 import {
- GoogleMaps,
  GoogleMap,
  GoogleMapsEvent,
- LatLng,
+ GoogleMapsLatLng,
  CameraPosition,
- MarkerOptions,
- Marker
-} from '@ionic-native/google-maps';
+ GoogleMapsMarkerOptions,
+ GoogleMapsMarker
+} from 'ionic-native';
 
 export class HomePage {
 map: GoogleMap;
@@ -47,9 +46,9 @@ ngAfterViewInit() {
  this.loadMap();
 }
 
-loadMap() {
- 
-        let location =new LatLng(43.0741904,-89.3809802);
+loadMap(){
+
+        let location = new GoogleMapsLatLng(43.0741904,-89.3809802);
 
         this.map = new GoogleMap('map', {
             'backgroundColor': 'white',
@@ -71,7 +70,28 @@ loadMap() {
                 'zoom': 15
             }
         });
- }
+
+
+        this.map.one(GoogleMapsEvent.MAP_READY).then(() => {
+    
+            this.map.clear();
+            let markerOptions: GoogleMapsMarkerOptions = {
+                position: location,
+                title:"Current Location..."
+            };
+              this.map.addMarker(markerOptions)
+                .then((marker: GoogleMapsMarker) => {
+                    marker.showInfoWindow();
+                    let position: CameraPosition = {
+                        target: location,
+                        zoom: 15,
+                        tilt: 30
+                    };
+                    this.map.moveCamera(position);
+                });
+            });
+            console.log('Map is ready!');
+    }
 
 }
 
@@ -80,8 +100,13 @@ loadMap() {
 ### Home html
 ```
   <ion-content>
-   <div #map id="map" style="height:100%;"></div>
+   <div id="map">
   </ion-content>
+```
+
+### home scss
+```
+ #map { height: 100%; }
 ```
 
 ### Resources
