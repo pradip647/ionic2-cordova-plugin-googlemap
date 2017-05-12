@@ -13,7 +13,7 @@ ionic run android (or ios)
 
 ## Step by Step Working Example
 
-###Requirements
+### Requirements
 * Ionic 2
 * cordova plugin googleplus (https://ionicframework.com/docs/native/google-maps)
 
@@ -23,7 +23,7 @@ From the root of your, execute the following:
 cordova plugin add https://github.com/mapsplugin/cordova-plugin-googlemaps#1.3.9 --variable API_KEY_FOR_ANDROID="YOUR_ANDROID_API_KEY_IS_HERE" --variable API_KEY_FOR_IOS="YOUR_IOS_API_KEY_IS_HERE"
 npm install --save @ionic-native/google-maps
 ```
-To get your variable API_KEY_ for ANDROID and IOS [Developer Console] (https://console.developers.google.com) ,create one Project,
+To get your variable API_KEY_ for ANDROID and IOS [Developer Console](https://console.developers.google.com) ,create one Project,
  then go to[ Project's credentials](https://console.developers.google.com), ENABLE API
 
 ## Usage
